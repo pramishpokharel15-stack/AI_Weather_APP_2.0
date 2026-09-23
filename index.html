@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Weather-aware outfit suggestions for your day.">
+  <title>Thread & Weather</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Thread and Weather home">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span>thread<span class="brand-and">&</span>weather</span>
+      </a>
+      <div class="topbar-status"><span class="status-dot"></span><span id="last-updated">Ready to check the sky</span></div>
+    </header>
+
+    <main>
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Your daily dressing forecast</p>
+          <h1>Dress for<br><em>what’s next.</em></h1>
+          <p class="hero-intro">A weather check with a little more consideration. Tell us where you are, and we’ll translate the forecast into an outfit that works from first coffee to last light.</p>
+        </div>
+        <div class="sun-disc" aria-hidden="true"><span>today</span><strong>☼</strong></div>
+      </section>
+
+      <section class="control-band" aria-label="Weather settings">
+        <form id="location-form" class="location-form">
+          <label for="city-search">City</label>
+          <input id="city-search" name="city" type="search" placeholder="Search a city" autocomplete="off">
+          <button class="search-button" type="submit">Search <span aria-hidden="true">↗</span></button>
+          <span class="or-divider">or</span>
+          <label for="latitude">Latitude</label>
+          <input id="latitude" name="latitude" type="number" step="any" value="42.33" required>
+          <label for="longitude">Longitude</label>
+          <input id="longitude" name="longitude" type="number" step="any" value="-83.05" required>
+          <button class="primary-button" type="submit"><span>Update forecast</span><span aria-hidden="true">↗</span></button>
+        </form>
+        <div class="unit-switch" role="group" aria-label="Temperature unit">
+          <button type="button" class="unit-button is-active" data-unit="celsius">°C</button>
+          <button type="button" class="unit-button" data-unit="fahrenheit">°F</button>
+        </div>
+      </section>
+
+      <section class="account-band" aria-label="Favorite city">
+        <div>
+          <p class="section-label">Your favorite city</p>
+          <p id="account-status">Log in to save a city that loads automatically next time.</p>
+        </div>
+        <div class="account-actions">
+          <button id="login-button" class="secondary-button" type="button">Log in</button>
+          <button id="favorite-button" class="secondary-button" type="button" hidden>Save current city</button>
+          <button id="logout-button" class="text-button" type="button" hidden>Log out</button>
+        </div>
+      </section>
+
+      <dialog id="login-dialog" class="login-dialog">
+        <form id="login-form" method="dialog">
+          <p class="section-label">Your weather profile</p>
+          <h2>Welcome back.</h2>
+          <label for="username">Name</label>
+          <input id="username" name="username" type="text" placeholder="e.g. Alex" maxlength="40" required>
+          <div class="dialog-actions"><button class="text-button" id="cancel-login" type="button">Cancel</button><button class="primary-button" type="submit">Continue <span aria-hidden="true">↗</span></button></div>
+        </form>
+      </dialog>
+
+      <div id="error-message" class="error-message" role="alert" hidden></div>
+      <div id="loading-message" class="loading-message" aria-live="polite" hidden>Reading the atmosphere...</div>
+
+      <section class="weather-layout" aria-live="polite">
+        <article class="weather-card">
+          <div class="card-heading"><span class="section-label">Current conditions</span><span class="location-chip" id="location-label">42.33° N · 83.05° W</span></div>
+          <div class="current-weather">
+            <div>
+              <p class="weather-kicker">Right now</p>
+              <div class="temperature"><span id="temperature">--</span><sup id="temperature-unit">°C</sup></div>
+              <p class="feels-like" id="feels-like">Live reading from Open-Meteo</p>
+            </div>
+            <div class="weather-icon" aria-hidden="true">☼</div>
+          </div>
+          <div class="weather-facts">
+            <div><span>Condition</span><strong id="condition">--</strong></div>
+            <div><span>Wind</span><strong id="wind">--</strong></div>
+            <div><span>Source</span><strong>Open-Meteo</strong></div>
+          </div>
+        </article>
+
+        <article class="outfit-card">
+          <div class="card-heading"><span class="section-label">The recommendation</span><span class="recommendation-tag">Made for today</span></div>
+          <div class="outfit-content">
+            <div class="outfit-illustration" aria-hidden="true"><div class="illustration-sun"></div><div class="illustration-coat"></div><div class="illustration-shirt"></div><div class="illustration-pants"></div><div class="illustration-shoe"></div></div>
+            <div class="outfit-copy">
+              <p class="outfit-title" id="outfit-title">Your look is loading</p>
+              <p id="outfit-description">We’ll put together a comfortable, weather-smart outfit as soon as we have the forecast.</p>
+              <ul class="outfit-list" id="outfit-list"></ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="tip-strip">
+        <span class="tip-number">01</span>
+        <p><strong>One thing to remember</strong><span id="tip-text">Weather can shift. A flexible layer is always a good call.</span></p>
+        <span class="tip-arrow" aria-hidden="true">↘</span>
+      </section>
+    </main>
+
+    <footer><span>THREAD & WEATHER</span><span>Forecast data by Open-Meteo</span><span id="coordinates-footer">42.33° N · 83.05° W</span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
